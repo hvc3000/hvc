@@ -1,0 +1,71 @@
+#########BPOW
+## ALL
+sudo apt-get update && sudo apt-get -y upgrade && sudo apt install -y python3-pip && wget https://github.com/BananoCoin/boompow/releases/download/v2.0.3/bpow-client-v203.zip && sudo apt install unzip && unzip -o bpow-client-v203.zip && cd bpow-client && pip3 install --user -r requirements.txt && sudo apt install ocl-icd-libopencl1
+
+##ANDROID
+apt-get update && apt-get -y upgrade && wget https://github.com/BananoCoin/boompow/releases/download/v2.0.3/bpow-client-v203.zip && apt install unzip && unzip bpow-client-v203.zip && cd bpow-client && pip3 install --user -r requirements.txt && sudo apt install ocl-icd-libopencl1
+
+## Single
+sudo apt-get update && sudo apt-get -y upgrade
+sudo apt install python3-pip
+sudo apt-get install python3-setuptools
+wget https://github.com/BananoCoin/boompow/releases/download/v2.0.3/bpow-client-v203.zip
+sudo apt install unzip
+unzip bpow-client-v203.zip
+cd bpow-client
+pip3 install --user -r requirements.txt
+sudo apt install ocl-icd-libopencl1
+./bin/linux/nano-work-server --help
+
+
+#########DPOW
+
+#SRV:
+sudo apt-get update && sudo apt-get -y upgrade && sudo apt install -y python3-pip && wget https://github.com/guilhermelawless/nano-dpow/releases/download/v1.0/nano-dpow-client-1.0.zip && sudo apt install unzip && unzip -o nano-dpow-client-1.0.zip && mv client dpow-client && cd dpow-client && pip3 install --user -r requirements.txt && sudo apt install ocl-icd-libopencl1 && cd bin/linux && chmod +x nano-work-server && cd ../..
+
+#RPI: 
+sudo apt-get update && sudo apt-get -y upgrade && sudo apt install -y python3-pip && sudo apt-get install python3-setuptools && wget https://github.com/guilhermelawless/nano-dpow/releases/download/v1.0/nano-dpow-client-1.0.zip && sudo apt install unzip && unzip -o nano-dpow-client-1.0.zip && mv client dpow-client && cd dpow-client && pip3 install --user -r requirements.txt && sudo apt install ocl-icd-libopencl1 && cd ~
+
+sudo apt-get update && sudo apt-get -y upgrade
+sudo apt install python3-pip
+sudo apt-get install python3-setuptools
+wget https://github.com/guilhermelawless/nano-dpow/releases/download/v1.0/nano-dpow-client-1.0.zip
+sudo apt install unzip
+unzip -o nano-dpow-client-1.0.zip
+mv client dpow-client
+cd dpow-client
+pip3 install --user -r requirements.txt
+mkdir bin/arm
+cp ~/bpow-client/bin/arm/nano-work-server ~/dpow-client/bin/arm/nano-work-server
+sudo apt install ocl-icd-libopencl1
+./bin/linux/nano-work-server --help
+
+
+###########NWS
+
+## Android
+
+apt-get install -y wget
+wget https://kuburan.github.io/kuburan-repo.sh
+chmod +x kuburan-repo.sh
+./kuburan-repo.sh
+
+curl -LO https://its-pointless.github.io/setup-pointless-repo.sh
+bash setup-pointless-repo.sh
+
+pkg install root-repo
+pkg install nano htop curl git wget clang ocl-icd* rust python clinfo
+pip install --upgrade pip
+git clone https://github.com/nanocurrency/nano-work-server.git
+cd nano-work-server && cargo build --release && cd target/release
+
+rustup self uninstall
+
+cd nano-work-server/target/release
+
+##
+
+sudo apt install ocl-icd-opencl-dev git && curl https://sh.rustup.rs -sSf | sh -s -- -y
+git clone https://github.com/nanocurrency/nano-work-server.git
+cd nano-work-server && cargo build --release && cd target/release
+mkdir ~/bpow-client/bin/arm && mkdir ~/dpow-client/bin/arm && cp nano-work-server ~/bpow-client/bin/arm && cp nano-work-server ~/dpow-client/bin/arm && cd ~
