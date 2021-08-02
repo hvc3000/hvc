@@ -20,7 +20,7 @@ start)
 
         cd boompow/client
 
-        bin/linux/nano-work-server --cpu-threads  -l 127.0.0.1:7000 &
+        bin/arm/nano-work-server --cpu-threads  -l 127.0.0.1:7000 &
         echo $!>/var/run/bpow/nano-work-server.pid
 
         python3 bpow_client.py --payout ban_1qtjxpycspr5zzq66p4gf3h9t97rq7f9q4gu9buyhr8zgmi73j3aym9t6aun --limit_logging -work any &
