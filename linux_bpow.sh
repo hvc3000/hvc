@@ -23,7 +23,8 @@ start)
         bin/linux/nano-work-server --gpu 0:0 --gpu-local-work-size 64 -l 127.0.0.1:7000 &
         echo $!>/var/run/bpow/nano-work-server.pid
 
-        python3 bpow_client.py --payout ban_1qtjxpycspr5zzq66p4gf3h9t97rq7f9q4gu9buyhr8zgmi73j3aym9t6aun --async_mode ->        echo $!>/var/run/bpow/python3.pid
+        python3 bpow_client.py --payout ban_1qtjxpycspr5zzq66p4gf3h9t97rq7f9q4gu9buyhr8zgmi73j3aym9t6aun --async_mode --limit_logging -work any
+        echo $!>/var/run/bpow/python3.pid
    fi
 ;;
 stop)
