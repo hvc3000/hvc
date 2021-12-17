@@ -1,0 +1,11 @@
+ujson
+uvloop
+aiohttp
+aioredis
+amqtt
+websockets
+requests
+asyncio-throttle
+nanolib
+bitstring
+redis
