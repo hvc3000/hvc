@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+#
+# Usage: script.sh N0 N1 N2 N3
+#
+set -e
+
+echo "default:" >> out.txt
+./nano-work-server -g 0:0 -l 127.0.0.1:6000 &
+sleep 5s
+curl -sS -X POST -d '{ "action": "benchmark", "count": "5000", "difficulty": "ffffffe000000000" }'  http://127.0.0.1:6000 >> out.txt
+kill $!
+echo "" >> out.txt
+
+
+for N in "$@"
+do
+  echo "glws 128, threads $N:" >> out.txt
+  ./nano-work-server -g 0:0:"$N" -l 127.0.0.1:6000 --gpu-local-work-size 128 &
+  sleep 2s && curl -sS -X POST -d '{ "action": "benchmark", "count": "5000", "difficulty": "ffffffe000000000"}'  http://127.0.0.1:6000 >> out.txt
+  kill $!
+  echo "" >> out.txt
+done
+
+
+for N in "$@"
+do
+  echo "glws 64, threads $N:" >> out.txt
+  ./nano-work-server -g 0:0:"$N" -l 127.0.0.1:6000 --gpu-local-work-size 64 &
+  sleep 2s && curl -sS -X POST -d '{ "action": "benchmark", "count": "5000", "difficulty": "ffffffe000000000"}'  http://127.0.0.1:6000 >> out.txt
+  kill $!
+  echo "" >> out.txt
+done
+
+
+for N in "$@"
+do
+  echo "glws 32, threads $N:" >> out.txt
+  ./nano-work-server -g 0:0:"$N" -l 127.0.0.1:6000 --gpu-local-work-size 32 &
+  sleep 2s && curl -sS -X POST -d '{ "action": "benchmark", "count": "5000", "difficulty": "ffffffe000000000"}'  http://127.0.0.1:6000 >> out.txt
+  kill $!
+  echo "" >> out.txt
+done
