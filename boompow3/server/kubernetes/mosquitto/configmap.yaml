@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: broker
+  namespace: mosquitto
+data:
+  mosquitto.conf: |
+    pid_file /mosquitto/data/mosquitto.pid
+
+    persistence false
+    persistence_location /mosquitto/data/
+
+    log_dest stderr
+
+    allow_anonymous false
+    password_file /mosquitto/secrets/passwd
+
+    listener 1883
+    protocol mqtt
+
+    listener 8883
+    protocol mqtt
+
+    listener 9001
+    protocol websockets
+
+    acl_file /mosquitto/config/acls.conf
+    persistent_client_expiration 12h
+  acls.conf: |
+    user server
+    topic write heartbeat
+    topic write statistics
+    topic write work/precache
+    topic write work/ondemand
+    topic write work/precache/+
+    topic write work/ondemand/+
+    topic write cancel/precache
+    topic write cancel/ondemand
+    topic read result/precache
+    topic read result/ondemand
+    topic write client/+
+    topic write service/+
+    topic read disconnect/+
+    topic read get_priority/+
+    topic write priority_response/+
+
+    user client
+    topic read heartbeat
+    topic read statistics
+    topic read work/precache
+    topic read work/ondemand
+    topic read work/precache/+
+    topic read work/ondemand/+
+    topic read cancel/precache
+    topic read cancel/ondemand
+    topic write result/precache
+    topic write result/ondemand
+    topic read client/+
+    topic write disconnect/+
+    topic write get_priority/+
+    topic read priority_response/+
+
+
+    user bpowinterface
+    topic read heartbeat
+    topic read statistics
+    topic read work/precache
+    topic read work/ondemand
+    topic read work/precache/+
+    topic read work/ondemand/+
+    topic read cancel/precache
+    topic read cancel/ondemand
+    topic read result/precache
+    topic read result/ondemand
+    topic read client/+
+    topic read service/+

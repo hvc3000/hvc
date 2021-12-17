@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boompow
+  namespace: boompow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boompow
+  template:
+    metadata:
+      labels:
+        app: boompow
+    spec:
+      containers:
+      - name: boompow
+        image: replaceme
+        imagePullPolicy: Always
+        command: ["/bin/bash", "-c"]
+        args: ["python bpow_server.py --external --log-to-stdout --websocket_uri ws://10.98.0.7:7074 --nano_websocket_uri ws://10.98.0.6:7078 --mqtt_uri mqtt://${MQTT_USER}:${MQTT_PASSWORD}@broker-internal.mosquitto:1883"]
+        ports:
+        - containerPort: 5035
+          name: servicews
+        - containerPort: 5030
+          name: service
+        - containerPort: 5031
+          name: upcheck
+        env:
+          - name: REDIS_HOST
+            value: redis-0.redis
+          - name: MQTT_USER
+            valueFrom:
+              secretKeyRef:
+                name: boompow
+                key: mqtt_user
+          - name: MQTT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: boompow
+                key: mqtt_password
